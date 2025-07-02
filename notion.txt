@@ -1,0 +1,60 @@
+Definition of done:
+
+- Published to GitHub
+- README
+- Unit test for the exercises
+
+## 🧱 Parte 1: Lógica Base (2h)
+
+### 🟦 1. Clases, Primitivos y Wrappers
+
+- Crea una clase `Mensaje` con:
+    - contenido (`String`)
+    - timestamp (`long`)
+    - tipo (`enum` TEXTO, SISTEMA)
+    - método `formatear()` que convierte el timestamp a formato legible
+- Crea una clase abstracta `Dispositivo` con:
+    - un nombre (`String`)
+    - un ID (`int`)
+    - métodos abstractos `enviarMensaje(Mensaje msg)` y `recibirMensaje(Mensaje msg)`
+- Usa `Integer`, `Boolean`, etc. para manejar configuraciones internas (ej. modo oscuro activado como `Boolean`).
+
+### 🟧 2. Flujo de Control y Arreglos
+
+- Implementa una clase concreta `Telefono` que extienda `Dispositivo`.
+- Usa un arreglo de `Mensaje` para guardar el historial, con lógica para sobrescribir el más antiguo si se llena.
+- Añade validaciones usando `if`, `switch` y loops para gestionar los mensajes:
+    - no se permite enviar mensajes vacíos.
+    - tipo `SISTEMA` se ignora si viene de otro `Dispositivo`.
+
+### 🟨 3. La clase System y Valor vs Referencia
+
+- Usa `System.currentTimeMillis()` y `System.getProperty()` para imprimir info del entorno al inicializar el dispositivo.
+- Implementa una función `cambiarNombre(Dispositivo d)` que demuestre cómo se comporta Java con paso por referencia vs valor.
+
+---
+
+## ⚙️ Parte 2: Genéricos, Interfaces, Excepciones, Threads (2h)
+
+### 🟩 4. Interfaces y Genéricos
+
+- Crea una interfaz `Exportable<T>` con método `exportar() : T`.
+- Implementa `exportar()` en `Telefono` para devolver su historial como un `List<String>`.
+- Implementa un método genérico `filtrarMensajes<T extends Mensaje>` que devuelva solo los mensajes de tipo TEXTO.
+
+### 🟥 5. Excepciones personalizadas
+
+- Crea `MensajeInvalidoException` y lanza esta excepción si el contenido es `null` o muy corto.
+- Maneja la excepción al enviar mensajes, logueando con `System.err`.
+
+### 🟦 6. Threads
+
+- Crea una clase `ServidorMensajes` que ejecuta en un hilo y hace de “enrutador”:
+    - Tiene una cola compartida (`Queue<Mensaje>`)
+    - En `run()`, va enviando los mensajes a su destinatario con `Thread.sleep(1000)`
+    - Usa `synchronized` para gestionar acceso concurrente.
+
+### 🎁 BONUS (si hay tiempo o como tarea)
+
+- Usa `ExecutorService` para lanzar múltiples `Dispositivo` enviando a la vez.
+- Implementa una versión con interfaz `Runnable`.
